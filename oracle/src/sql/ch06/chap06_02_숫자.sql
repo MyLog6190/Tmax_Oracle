@@ -23,9 +23,6 @@ select ceil(3.14), floor(3.14), ceil(-3.14), floor(-3.14)
   
 /* 나머지 함수 mod(a,b) */
 select mod(15,6), mod(10,2), mod(11,2) from dual; 
-
-
-s  
   
   
   
