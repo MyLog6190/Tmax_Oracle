@@ -151,9 +151,3 @@ select empno, ename, sal, grade
    and sal >  (select max(sal) 
                  from emp 
                 where job = 'SALESMAN');
-
- 
- 
- 
- 
- 

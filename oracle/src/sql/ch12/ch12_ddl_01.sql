@@ -67,8 +67,3 @@ select * from emp_myddl;
 
 /* 테이블 삭제 dop table테이블명 */
 drop table emp_myddl;
-
-
-
-
-

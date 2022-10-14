@@ -169,6 +169,3 @@ select * from e;
 
 /* 동의어 삭제 drop synonym 시노님명*/
 drop synonym e;
-
-
-
