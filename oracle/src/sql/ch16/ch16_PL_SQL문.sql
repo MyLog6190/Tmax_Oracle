@@ -187,5 +187,125 @@ SQL> /
 PL/SQL procedure successfully completed.
 
 /*-----------------------------------------------------*/
+declare
+v_number number :=13;
+begin
+ if mod(v_number,2) =0 then
+    dbms_output.put_line(v_number||'는 짝수입니다.');
+ else
+    dbms_output.put_line(v_number||'는 홀수입니다.');
+ end if;
+end;
+/
+/*-------------------------------------------------------*/
+declare
+v_score number := 87;
+begin
+ if v_score >=90  then
+    dbms_output.put_line('A학점');
+ elsif v_score >=80 then
+    dbms_output.put_line('B학점');
+ elsif v_score >=70 then
+    dbms_output.put_line('C학점');
+ else 
+    dbms_output.put_line('F학점');
+ end if;
+end;
+/
+/*---------------------------------------------------*/
+declare
+v_score number := 87;
+begin
+  --dbms_output.put_line(trunc(v_score/10));
+  case trunc(v_score/10)
+     when 10 then dbms_output.put_line('A학점');
+     when 9 then dbms_output.put_line('A학점');
+     when 8 then dbms_output.put_line('B점');
+     when 7 then dbms_output.put_line('C학점');
+     else dbms_output.put_line('F학점');
+  end case;
+end;
+/
 
+/*-----------------------------------------------------*/
+declare
+v_score number := 87;
+begin
+  --dbms_output.put_line(trunc(v_score/10));
+  case 
+     when trunc(v_score/10)=10 then dbms_output.put_line('A학점');
+     when trunc(v_score/10)=9 then dbms_output.put_line('A학점');
+     when trunc(v_score/10)=8 then dbms_output.put_line('B점');
+     when trunc(v_score/10)=7 then dbms_output.put_line('C학점');
+     else dbms_output.put_line('F학점');
+  end case;
+end;
+/
+/*------------------------------------------------*/
+declare
+v_score number := 87;
+begin
+  --dbms_output.put_line(trunc(v_score/10));
+  case 
+     when v_score>=90 then dbms_output.put_line('A학점');
+     when v_score>=80 then dbms_output.put_line('B점');
+     when v_score>=70 then dbms_output.put_line('C학점');
+     else dbms_output.put_line('F학점');
+  end case;
+end;
+/
+/*-------------------------------------------------*/
+select empno,ename, dname,grade
+     from emp, dept, salgrade
+    where emp.deptno = dept.deptno
+      and sal between losal and hisal
+      and empno=7788;
+/*--------------------------------------------------*/
+ declare
+v_empno emp.empno%type := 7788;
+v_ename emp.ename%type;
+v_dname dept.dname%type;
+v_grade salgrade.grade%type;
 
+begin
+   select empno,ename, dname,grade
+     into v_empno, v_ename, v_dname,v_grade 
+     from emp, dept, salgrade
+    where emp.deptno = dept.deptno
+      and sal between losal and hisal
+      and empno=v_empno;
+   dbms_output.put_line('사원번호:'||v_empno);
+   dbms_output.put_line('사원명:'||v_ename);
+   dbms_output.put_line('부서명:'||v_dname);
+   dbms_output.put_line('급여등급:'||v_grade);
+    --사원번호,
+    --사원명
+    --부서명
+    --급여등급
+end;
+/     
+/*-------------------------------------------------*/
+declare
+v_empno emp.empno%type := 7788;
+v_ename emp.ename%type;
+v_dname dept.dname%type;
+v_grade salgrade.grade%type;
+v_empinfo emp%rowType;
+begin
+   select empno,ename, dname,grade,null,null,null,null
+     into v_empinfo 
+     from emp, dept, salgrade
+    where emp.deptno = dept.deptno
+      and sal between losal and hisal
+      and empno=v_empno;
+   dbms_output.put_line('사원번호:'||v_empinfo.empno);
+   dbms_output.put_line('사원명:'||v_empinfo.ename);
+   dbms_output.put_line('부서명:'||v_empinfo.job);
+   dbms_output.put_line('급여등급:'||v_empinfo.mgr);
+    --사원번호,
+    --사원명
+    --부서명
+    --급여등급
+end;
+/
+      
