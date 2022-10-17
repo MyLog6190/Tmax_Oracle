@@ -160,12 +160,59 @@ increment by 3
 maxvalue 99
 cycle;
 
+select * from dba_synonyms;
 /* 시퀀스 삭제 drop sequence 시퀀스명 */
 drop sequence seq_dept_sequence
 
 /* 동의어 synonym */
-create public synonym e for emp;
+create synonym e for emp;
 select * from e;
 
 /* 동의어 삭제 drop synonym 시노님명*/
 drop synonym e;
+
+/* ch13 확인*/
+/*1.1)emp테이블과 같은 구조의 데이터를 저장하는 empidx테이블생성.
+ *  2)생성한 empidx테이블의 empno열에 idx_empidx_empno인덱스 생성
+ *  3)사전뷰(user_indexes)로 조회 
+ * */
+create table empidx
+as
+select * from emp where 1=0;
+
+select * from empidx;
+/* create index 인덱스명 on 테이블명(칼럼명) */
+create index idx_empidx_empno on empidx(empno);
+/* index정보 조회 */
+select * from user_indexes;
+select * from user_ind_columns;
+
+/*2. 뷰 만들기 */
+/* 급여가 1500초과인 사원들만 출력 empidx_over15k 
+ * 사원번호, 사원이름, 직책, 부서번호, 급여, 추가수당('O','X') */
+insert into empidx
+select * from emp;
+commit
+select * from empidx;
+
+/* view 생성 */
+create or replace view empidx_over15k
+as
+select empno, ename, job, deptno,sal, 
+       nvl2(comm,'O','X') comm
+  from empidx
+ where sal > 1500
+ order by empno;
+
+select * from empidx_over15k;
+
+/* 3. 부서번호의 시작:1, 부서번호 증가:1, 부서번호의 최댓값:99,
+ *    부서번호의 최소값:1, 부서번호 최댓값에서 생성 중단, 캐시없음  */
+create sequence deptseq
+start with 1
+increment by 1
+maxvalue 99
+minvalue 1
+nocycle
+nocache
+;
