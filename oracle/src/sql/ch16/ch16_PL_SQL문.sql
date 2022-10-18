@@ -309,3 +309,117 @@ begin
 end;
 /
       
+
+/*----------- 기본 loop exit when -------- */
+declare
+v_num number := 0;
+begin
+loop
+  dbms_output.put_line('현재 v_num:'||v_num);
+  v_num :=v_num+1;
+  exit when v_num > 4;
+end loop;
+end;
+/
+/*----------- 기본 loop exit --------------*/
+declare
+v_num number := 0;
+begin
+loop
+  dbms_output.put_line('현재 v_num:'||v_num);
+  v_num :=v_num+1;
+  --exit when v_num > 4;
+  if  v_num > 4 then
+     exit;
+  end if;
+end loop;
+end;
+/
+
+/*----------------------------------------------*/
+/*------------- while loop ---------------------*/
+declare
+v_num number :=0;
+begin
+ while v_num < 4 loop
+   dbms_output.put_line('현재 v_num:'||v_num);
+   v_num := v_num+1;
+ end loop;
+end;
+/
+
+/**------------ for i in 시작..끝 loop -----------------*/
+begin
+ for i in 0..4 loop
+    dbms_output.put_line('현재 i의 값:'|| i );
+ end loop;
+end;
+/
+/**--------- for i in reverse 시작..끝 loop -------------*/
+begin
+ for i in reverse 0..4 loop
+    dbms_output.put_line('현재 i의 값:'|| i );
+ end loop;
+end;
+/
+
+/**--------- continue when -------------*/
+begin
+for i in 0..4 loop
+  continue when mod(i,2) =1;
+  dbms_output.put('현재 i의 값:'||i||' ');
+end loop;
+  dbms_output.put_line('');
+end;
+/
+
+/**--------- if 조건 then continue  -------------*/
+begin
+for i in 0..4 loop
+  if mod(i,2) =1 then
+  --continue when mod(i,2) =1;
+    continue;
+  end if;
+  dbms_output.put('현재 i의 값:'||i||' ');
+end loop;
+  dbms_output.put_line('');
+end;
+/
+
+/*--------------  이중 반복문 구구단 ----------------*/
+begin
+for i in 2..9 loop
+  for j in 1..9 loop
+    dbms_output.put(i||'x'||j||'='||(i*j)||'   ');
+  end loop;
+   dbms_output.put_line('');
+end loop;
+end;
+/
+
+/* 16-1. 숫자 1부터10까지 중 홀수만 출력 */
+begin
+  for i in 1..10 loop
+    continue when mod(i,2)=0;
+    dbms_output.put_line('현재 i의값 : '||i);
+  end loop;  
+end; 
+
+
+/* 16-2. dept테이블의 deptno와 자료형이 같은 변수 v_deptno 선언.
+ * v_deptno 변수 값에 10,20,30,40을 대입했을때 부서명을 출력하도록
+ * 작성 
+ * 단 부서번호가 10,20,30,40이 아니면 N/A 출력 
+ * */
+declare
+ v_deptno dept.deptno%type :=10;
+begin
+	case v_deptno
+	 when 10 then dbms_output.put_line('DNAME : ACCOUNTING');
+	 when 20 then dbms_output.put_line('DNAME : SEARCH');
+	 when 30 then dbms_output.put_line('DNAME : SALES');
+	 when 40 then dbms_output.put_line('DNAME : OPERATIONS');
+	 else dbms_output.put_line('DNAME : N/A');
+    end case;
+end;
+/
